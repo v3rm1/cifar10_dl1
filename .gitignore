@@ -1,6 +1,6 @@
 # Directory list
 .DS_Store
-data/
-
+data
+__pycache__
 # File list
 
