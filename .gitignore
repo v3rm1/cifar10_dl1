@@ -2,5 +2,8 @@
 .DS_Store
 data
 __pycache__
-# File list
+models
 
+# File list
+.vscode/launch.json
+.vscode/settings.json
