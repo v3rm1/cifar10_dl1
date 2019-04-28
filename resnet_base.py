@@ -23,10 +23,6 @@ FLAT_IMG_SIZE = IMG_SIZE * IMG_SIZE * RGB_CHANNELS
 
 NUM_CLASSES = 10
 
-NUM_TRAIN_FILES = 5
-
-IMG_PER_FILE = 10000
-
 # Functions defining DNN model
 
 def _base_model():
@@ -65,8 +61,7 @@ def generate_model(fine_tune_from=25):
     """
     base_model = _base_model()
     if 0 < fine_tune_from < len(base_model.layers):
-        print("Finetuning the top {} layers of the network, all other layers \
-              will be preserved with ImageNet weights.".format(fine_tune_from))
+        print("Finetuning the top {} layers of the network, all other layers              will be preserved with ImageNet weights.".format(fine_tune_from))
         base_model.trainable = True
         for layer in base_model.layers[:fine_tune_from]:
             layer.trainable = False
@@ -83,7 +78,7 @@ def generate_model(fine_tune_from=25):
         model = tf.keras.Sequential([
             base_model,
             tf.keras.layers.GlobalAveragePooling2D(),
-            tf.keras.layers.Dense(units=10, activation='sigmoid')
+            tf.keras.layers.Dense(units=NUM_CLASSES, activation='sigmoid')
         ])
 
     return model
