@@ -20,6 +20,7 @@ from urllib import request
 import tarfile
 import pickle
 import numpy as np
+from tensorflow import keras
 
 # Data paths and variables
 
@@ -45,7 +46,7 @@ IMG_PER_FILE = 10000
 
 # Functions for downloading, unpickling and parsing CIFAR-10 files
 
-def _download_and_extract(web_url, download_dir):
+def _download_and_extract(url, download_dir):
     """
     Download and extract the CIFAR-10 dataset from the CS Toronto website if
     local data does not exist.
@@ -57,15 +58,15 @@ def _download_and_extract(web_url, download_dir):
     Returns:
         None
     """
-    file_name = web_url.split('/')[-1]
+    file_name = url.split('/')[-1]
     file_path = os.path.join(download_dir, file_name)
 
     if not os.path.exists(file_path):
         if not os.path.exists(download_dir):
             os.mkdir(download_dir)
 
-        print("Downloading data.\nURL: {0}\nDestination Folder: {1}".format(web_url, file_path))
-        file_path, _ = request.urlretrieve(web_url=web_url, filename=file_path)
+        print("Downloading data.\nURL: {0}\nDestination Folder: {1}".format(url, file_path))
+        file_path, _ = request.urlretrieve(url, filename=file_path)
 
         print("Download complete. Extracting files.")
         tarfile.open(name=file_path, mode="r:gz").extractall(download_dir)
@@ -121,6 +122,7 @@ def _load_data(file_name):
         images: np.array, Image data
         class_numbers: np.array, Class label as integer
     """
+    _download_and_extract(WEB_URL, DATA_PATH)
     raw_data = _unpickle_files(file_name=file_name)
     images = _convert_image_data(raw_images=raw_data[b'data'])
     class_numbers = np.array(raw_data[b'labels'])
@@ -172,7 +174,7 @@ def load_train_data():
 
         batch_begin = batch_end
 
-    train_ohc_classes = np.eye(NUM_CLASSES, dtype=float)[train_class_numbers]
+    train_ohc_classes = keras.utils.to_categorical(train_class_numbers)
 
     return train_images, train_class_numbers, train_ohc_classes
 
@@ -191,7 +193,7 @@ def load_test_data():
 
     test_images, test_class_numbers = _load_data(file_name="test_batch")
 
-    test_ohc_classes = np.eye(NUM_CLASSES, dtype=float)[test_class_numbers]
+    test_ohc_classes = keras.utils.to_categorical(test_class_numbers)
 
     return test_images, test_class_numbers, test_ohc_classes
 
