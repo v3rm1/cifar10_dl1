@@ -13,7 +13,7 @@ app.py :
 
 import tensorflow as tf
 import parse_cifar as pc
-import resnet_base as base
+import vgg16_base as base
 import pandas as pd
 import numpy as np
 from time import strftime as timestamp
@@ -37,7 +37,7 @@ def main():
     model = base.generate_model()
     adam = tf.keras.optimizers.Adam(lr=0.001)
     model.compile(adam, loss='categorical_crossentropy', metrics=['accuracy'])
-    model.fit(x=train_data, y=train_classes_ohc, batch_size=BATCH_SIZE, epochs=5, verbose=1)
+    model.fit(x=train_data, y=train_classes_ohc, batch_size=BATCH_SIZE, epochs=1, verbose=1)
     #model.load_weights('./models/model_wts28Apr_1443.h5')
     model.save(MODEL_PATH)
     model.save_weights(MODEL_WTS_PATH)

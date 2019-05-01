@@ -1,11 +1,11 @@
 """
-Created Date: Apr 20, 2019
+Created Date: Apr 25, 2019
 
-Created By: varunravivarma
+Created By: tparisotto
 -------------------------------------------------------------------------------
 
-resnet_base.py :
-    Imports the base resnet50 model from Tensorflow.Keras for transfer learning,
+vgg16_base.py :
+    Imports the base vgg16 model from Tensorflow.Keras for transfer learning,
     updating the classification layers with user defined layers.
 """
 
@@ -23,20 +23,24 @@ FLAT_IMG_SIZE = IMG_SIZE * IMG_SIZE * RGB_CHANNELS
 
 NUM_CLASSES = 10
 
+NUM_TRAIN_FILES = 5
+
+IMG_PER_FILE = 10000
+
 # Functions defining DNN model
 
 def _base_model():
     """
-    Creates the base ResNet50 model from keras models, initializes the model
+    Creates the base VGG16 model from keras models, initializes the model
     with ImageNet weights.
 
     Arguments:
         None
     Returns:
-        base_model: Keras model, base ResNet50 model with ImageNet weights
+        base_model: Keras model, base VGG16 model with ImageNet weights
     """
     _img_shape = (IMG_SIZE, IMG_SIZE, RGB_CHANNELS)
-    base_model = tf.keras.applications.ResNet50(input_shape=_img_shape,
+    base_model = tf.keras.applications.VGG16(input_shape=_img_shape,
                                                 include_top=False,
                                                 weights='imagenet')
 
@@ -44,15 +48,15 @@ def _base_model():
 
 # TODO: Create Image generator methods (what does this do and is it necessary)
 
-def generate_model(fine_tune_from=25):
+def generate_model(fine_tune_from=5):
     """
     Creates the complete classifier model using Keras Sequential and
     the base model created by _base_model function.
 
     Arguments:
-        fine_tune_from: int, default=25, the number of layers (from the top)
+        fine_tune_from: int, default=5, the number of layers (from the top)
             of the neural network that can be retrained
-            ResNet-50 has 175 layers (excluding top layers)
+            vgg16 has 19 layers (excluding top layers)
 
     Returns:
         model: Keras model, complete model for classification, built using the
@@ -60,9 +64,9 @@ def generate_model(fine_tune_from=25):
             CIFAR-10 dataset
     """
     base_model = _base_model()
-    
     if 0 < fine_tune_from < len(base_model.layers):
-        print("Finetuning the top {} layers of the network, all other layers              will be preserved with ImageNet weights.".format(fine_tune_from))
+        print("Finetuning the top {} layers of the network, all other layers \
+              will be preserved with ImageNet weights.".format(fine_tune_from))
         base_model.trainable = True
         for layer in base_model.layers[:fine_tune_from]:
             layer.trainable = False
@@ -79,7 +83,7 @@ def generate_model(fine_tune_from=25):
         model = tf.keras.Sequential([
             base_model,
             tf.keras.layers.GlobalAveragePooling2D(),
-            tf.keras.layers.Dense(units=NUM_CLASSES, activation='sigmoid')
+            tf.keras.layers.Dense(units=10, activation='sigmoid')
         ])
 
     return model
