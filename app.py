@@ -37,15 +37,16 @@ def main():
     model = base.generate_model()
     adam = tf.keras.optimizers.Adam(lr=0.001)
     model.compile(adam, loss='categorical_crossentropy', metrics=['accuracy'])
-    model.fit(x=train_data, y=train_classes_ohc, batch_size=BATCH_SIZE, epochs=5, verbose=1)
-    #model.load_weights('./models/model_wts28Apr_1443.h5')
+    model.fit(x=train_data, y=train_classes_ohc, batch_size=BATCH_SIZE, epochs=10, verbose=1)
+    model.load_weights('models/model_wts28Apr_1834.h5')
     model.save(MODEL_PATH)
     model.save_weights(MODEL_WTS_PATH)
+
     
     test_y = model.predict_classes(x=test_data)
-    test_y = decode(test_y)
-    test_out = pd.DataFrame(columns=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], data=[test_y])
-    test_out.to_csv('test_out.csv')
+    #test_y = decode(test_y)
+    test_out = pd.DataFrame(columns=['0'], data=test_y)
+    test_out.to_csv('./test_out.csv')
     return
 
 if __name__ == "__main__":
