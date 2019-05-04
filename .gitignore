@@ -9,4 +9,3 @@ logs
 .vscode/launch.json
 .vscode/settings.json
 test_out.csv
-dl1.sh
