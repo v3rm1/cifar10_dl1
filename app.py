@@ -71,7 +71,7 @@ def main():
     batchnorm_model_path = './models/batchnorm/model_' + timestamp("%d%b_%H%M") + 'batchnorm.h5'
     batchnorm_wts_path = './models/batchnorm/model_wts' + timestamp("%d%b_%H%M") + 'batchnorm.h5'
     batchnorm_call_back = tf.keras.callbacks.TensorBoard(log_dir='./logs/batchnorm', histogram_freq=0, write_graph=True, write_images=True)
-    batchnorm_model = base.batchnorm_model(fine_tune_from=100, fcl_activation=param_grid['fcl_activations'][0])
+    batchnorm_model = base.batch_norm_model(fine_tune_from=100, fcl_activation=param_grid['fcl_activations'][0])
     compiled_batchnorm = batchnorm_model.compile(param_grid['optimizers'][0], loss='categorical_crossentropy', metrics=['accuracy'])
     batchnorm_model.fit(x=train_data, y=train_classes_ohc, batch_size=BATCH_SIZE, epochs=10, verbose=2, validation_split=0.3, callbacks=[batchnorm_call_back])
     batchnorm_model.save(batchnorm_model_path)
@@ -81,7 +81,7 @@ def main():
     w_decay_model_path = './models/w_decay/model_' + timestamp("%d%b_%H%M") + 'w_decay.h5'
     w_decay_wts_path = './models/w_decay/model_wts' + timestamp("%d%b_%H%M") + 'w_decay.h5'
     w_decay_call_back = tf.keras.callbacks.TensorBoard(log_dir='./logs/w_decay', histogram_freq=0, write_graph=True, write_images=True)
-    w_decay_model = base.w_decay_model(fine_tune_from=100, fcl_activation=param_grid['fcl_activations'][0])
+    w_decay_model = base.weight_decay_model(fine_tune_from=100, fcl_activation=param_grid['fcl_activations'][0])
     compiled_w_decay = w_decay_model.compile(param_grid['optimizers'][0], loss='categorical_crossentropy', metrics=['accuracy'])
     w_decay_model.fit(x=train_data, y=train_classes_ohc, batch_size=BATCH_SIZE, epochs=10, verbose=2, validation_split=0.3, callbacks=[w_decay_call_back])
     w_decay_model.save(w_decay_model_path)
