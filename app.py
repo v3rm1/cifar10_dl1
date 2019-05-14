@@ -62,8 +62,8 @@ def main():
         
                         if model == 'baseline':                         
                             # Baseline model
-                            baseline_model_path = './models/baseline/model_' + epoch + activation_fn + opt + batch + '_' + timestamp("%d%b_%H%M") + 'baseline.h5'
-                            baseline_wts_path = './models/baseline/model_wts' + epoch + activation_fn + opt + batch + '_' + timestamp("%d%b_%H%M") + 'baseline.h5'
+                            baseline_model_path = './models/baseline/model_' + str(epoch) + activation_fn + opt + str(batch) + '_' + timestamp("%d%b_%H%M") + 'baseline.h5'
+                            baseline_wts_path = './models/baseline/model_wts' + str(epoch) + activation_fn + opt + str(batch) + '_' + timestamp("%d%b_%H%M") + 'baseline.h5'
                             baseline_call_back = tf.keras.callbacks.TensorBoard(log_dir='./logs/baseline', histogram_freq=0, write_graph=True, write_images=True)
                             baseline_model = base.baseline_model(fine_tune_from=100, fcl_activation=activation_fn)
                             compiled_baseline = baseline_model.compile(optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
@@ -75,8 +75,8 @@ def main():
                         
                         elif model == 'batchnorm':
                             # Batch Normalization model
-                            batchnorm_model_path = './models/batchnorm/model_' + epoch + activation_fn + opt + batch + '_' + timestamp("%d%b_%H%M") + 'batchnorm.h5'
-                            batchnorm_wts_path = './models/batchnorm/model_wts' + epoch + activation_fn + opt + batch + '_' + timestamp("%d%b_%H%M") + 'batchnorm.h5'
+                            batchnorm_model_path = './models/batchnorm/model_' + str(epoch) + activation_fn + opt + str(batch) + '_' + timestamp("%d%b_%H%M") + 'batchnorm.h5'
+                            batchnorm_wts_path = './models/batchnorm/model_wts' + str(epoch) + activation_fn + opt + str(batch) + '_' + timestamp("%d%b_%H%M") + 'batchnorm.h5'
                             batchnorm_call_back = tf.keras.callbacks.TensorBoard(log_dir='./logs/batchnorm', histogram_freq=0, write_graph=True, write_images=True)
                             batchnorm_model = base.batch_norm_model(fine_tune_from=100, fcl_activation=activation_fn)
                             compiled_batchnorm = batchnorm_model.compile(optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
@@ -88,8 +88,8 @@ def main():
 
                         elif model == 'dropout':
                             # Dropout model
-                            dropout_model_path = './models/dropout/model_' + epoch + activation_fn + opt + batch + '_' + timestamp("%d%b_%H%M") + 'dropout.h5'
-                            dropout_wts_path = './models/dropout/model_wts' + epoch + activation_fn + opt + batch + '_' + timestamp("%d%b_%H%M") + 'dropout.h5'
+                            dropout_model_path = './models/dropout/model_' + str(epoch) + activation_fn + opt + str(batch) + '_' + timestamp("%d%b_%H%M") + 'dropout.h5'
+                            dropout_wts_path = './models/dropout/model_wts' + str(epoch) + activation_fn + opt + str(batch) + '_' + timestamp("%d%b_%H%M") + 'dropout.h5'
                             dropout_call_back = tf.keras.callbacks.TensorBoard(log_dir='./logs/dropout', histogram_freq=0, write_graph=True, write_images=True)
                             dropout_model = base.dropout_model(fine_tune_from=100, fcl_activation=activation_fn)
                             compiled_dropout = dropout_model.compile(optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
@@ -101,8 +101,8 @@ def main():
 
                         elif model == 'weightdecay': 
                             # Weight decay model
-                            w_decay_model_path = './models/w_decay/model_' + epoch + activation_fn + opt + batch + '_' + timestamp("%d%b_%H%M") + 'w_decay.h5'
-                            w_decay_wts_path = './models/w_decay/model_wts'+ epoch + activation_fn + opt + batch + '_' + timestamp("%d%b_%H%M") + 'w_decay.h5'
+                            w_decay_model_path = './models/w_decay/model_' + str(epoch) + activation_fn + opt + str(batch) + '_' + timestamp("%d%b_%H%M") + 'w_decay.h5'
+                            w_decay_wts_path = './models/w_decay/model_wts'+ str(epoch) + activation_fn + opt + str(batch) + '_' + timestamp("%d%b_%H%M") + 'w_decay.h5'
                             w_decay_call_back = tf.keras.callbacks.TensorBoard(log_dir='./logs/w_decay', histogram_freq=0, write_graph=True, write_images=True)
                             w_decay_model = base.weight_decay_model(fine_tune_from=100, fcl_activation=activation_fn)
                             compiled_w_decay = w_decay_model.compile(optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
