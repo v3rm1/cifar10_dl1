@@ -67,9 +67,11 @@ def main():
                             baseline_call_back = tf.keras.callbacks.TensorBoard(log_dir='./logs/baseline', histogram_freq=0, write_graph=True, write_images=True)
                             baseline_model = base.baseline_model(fine_tune_from=100, fcl_activation=activation_fn)
                             compiled_baseline = baseline_model.compile(optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
-                            baseline_model.fit(x=train_data, y=train_classes_ohc, batch_size=BATCH_SIZE, epochs=10, verbose=2, validation_split=0.3, callbacks=[baseline_call_back])
+                            baseline_model.fit(x=train_data, y=train_classes_ohc, batch_size=batch, epochs=epoch, verbose=2, validation_split=0.3, callbacks=[baseline_call_back])
                             baseline_model.save(baseline_model_path)
                             baseline_model.save_weights(baseline_wts_path)
+                            print("Saved model file to:{}".format(baseline_model_path))
+                            print("Saved weights to:{}".format(baseline_wts_path))
                         
                         elif model == 'batchnorm':
                             # Batch Normalization model
@@ -78,9 +80,11 @@ def main():
                             batchnorm_call_back = tf.keras.callbacks.TensorBoard(log_dir='./logs/batchnorm', histogram_freq=0, write_graph=True, write_images=True)
                             batchnorm_model = base.batch_norm_model(fine_tune_from=100, fcl_activation=activation_fn)
                             compiled_batchnorm = batchnorm_model.compile(optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
-                            batchnorm_model.fit(x=train_data, y=train_classes_ohc, batch_size=BATCH_SIZE, epochs=10, verbose=2, validation_split=0.3, callbacks=[batchnorm_call_back])
+                            batchnorm_model.fit(x=train_data, y=train_classes_ohc, batch_size=batch, epochs=epoch, verbose=2, validation_split=0.3, callbacks=[batchnorm_call_back])
                             batchnorm_model.save(batchnorm_model_path)
                             batchnorm_model.save_weights(batchnorm_wts_path)
+                            print("Saved model file to:{}".format(batchnorm_model_path))
+                            print("Saved weights to:{}".format(batchnorm_wts_path))
 
                         elif model == 'dropout':
                             # Dropout model
@@ -89,9 +93,11 @@ def main():
                             dropout_call_back = tf.keras.callbacks.TensorBoard(log_dir='./logs/dropout', histogram_freq=0, write_graph=True, write_images=True)
                             dropout_model = base.dropout_model(fine_tune_from=100, fcl_activation=activation_fn)
                             compiled_dropout = dropout_model.compile(optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
-                            dropout_model.fit(x=train_data, y=train_classes_ohc, batch_size=BATCH_SIZE, epochs=10, verbose=2, validation_split=0.3, callbacks=[dropout_call_back])
+                            dropout_model.fit(x=train_data, y=train_classes_ohc, batch_size=batch, epochs=epoch, verbose=2, validation_split=0.3, callbacks=[dropout_call_back])
                             dropout_model.save(dropout_model_path)
                             dropout_model.save_weights(dropout_wts_path)
+                            print("Saved model file to:{}".format(dropout_model_path))
+                            print("Saved weights to:{}".format(dropout_wts_path))
 
                         elif model == 'weightdecay': 
                             # Weight decay model
@@ -100,9 +106,11 @@ def main():
                             w_decay_call_back = tf.keras.callbacks.TensorBoard(log_dir='./logs/w_decay', histogram_freq=0, write_graph=True, write_images=True)
                             w_decay_model = base.weight_decay_model(fine_tune_from=100, fcl_activation=activation_fn)
                             compiled_w_decay = w_decay_model.compile(optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
-                            w_decay_model.fit(x=train_data, y=train_classes_ohc, batch_size=BATCH_SIZE, epochs=10, verbose=2, validation_split=0.3, callbacks=[w_decay_call_back])
+                            w_decay_model.fit(x=train_data, y=train_classes_ohc, batch_size=batch, epochs=epoch, verbose=2, validation_split=0.3, callbacks=[w_decay_call_back])
                             w_decay_model.save(w_decay_model_path)
                             w_decay_model.save_weights(w_decay_wts_path)
+                            print("Saved model file to:{}".format(w_decay_model_path))
+                            print("Saved weights to:{}".format(w_decay_wts_path))
     
     # test_y = baseline_model.predict_classes(x=test_data)
     # test_out = pd.DataFrame(columns=['op'], data=test_y)
