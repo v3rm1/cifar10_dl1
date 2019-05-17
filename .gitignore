@@ -1,0 +1,12 @@
+# Directory list
+.DS_Store
+data
+__pycache__
+models
+logs
+h5py
+test_out
+
+# File list
+.vscode/launch.json
+.vscode/settings.json
